@@ -4,7 +4,7 @@
     include_once('app/gravar_verificacao.php');
      include_once('app/carrinho.php');
      if(!isset($_SESSION['UsuarioID'])) header('Location: index.php');
-   
+
 ?>
 <html lang="en">
   <head>
@@ -12,18 +12,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>eElectronics -Gtwork </title>
-    
+
     <!-- Google Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Raleway:400,100' rel='stylesheet' type='text/css'>
-    
+
     <!-- Bootstrap -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="css/font-awesome.min.css">
-    
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/owl.carousel.css">
     <link rel="stylesheet" href="style.css">
@@ -37,7 +37,7 @@
     <![endif]-->
   </head>
   <body>
-   
+
     <div class="header-area">
         <div class="container">
             <div class="row">
@@ -54,7 +54,7 @@
                             }else{
                                 echo "<li><a href='app/sair.php'><i class=' user'></i> Logout</a></li>";
                             }
-                            
+
                              if($_SESSION['UsuarioPermissao'] == "admin"){
                                 echo "<li><a href='admin/index.php'><i class=' user'></i> DashBoard</a></li>";
                             }
@@ -62,7 +62,7 @@
                         </ul>
                     </div>
                 </div>
-                
+
                 <div class="col-md-4">
                     <div class="header-right">
                         <ul class="list-unstyled list-inline">
@@ -75,7 +75,7 @@
             </div>
         </div>
     </div> <!-- End header area -->
-    
+
     <div class="site-branding-area">
         <div class="container">
             <div class="row">
@@ -84,12 +84,12 @@
                         <h1><a href="index.php"><span>Digitalia</span></a></h1>
                     </div>
                 </div>
-                
+
                 <div class="col-sm-6">
                     <div class="shopping-item">
-                        <a href="cart.php">Cart - <span class="cart-amunt"><?php 
+                        <a href="cart.php">Cart - <span class="cart-amunt"><?php
                         foreach($_SESSION['carrinho'] as $id => $qtd){
-                                    
+
                                     $resultado4=mysqli_query($cnx,"select *from produtos where id = $id") or die (mysqli_error());
                                     $data = mysqli_fetch_assoc($resultado4);
                                     $final += $data['precoUnitario']*$qtd;
@@ -101,7 +101,7 @@
             </div>
         </div>
     </div> <!-- End site branding area -->
-    
+
     <div class="mainmenu-area">
         <div class="container">
             <div class="row">
@@ -112,7 +112,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                </div> 
+                </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li><a href="index.php">Home</a></li>
@@ -124,11 +124,11 @@
                         <li><a href="#">Outros</a></li>
                         <li><a href="#">Contactos</a></li>
                     </ul>
-                </div>  
+                </div>
             </div>
         </div>
     </div> <!-- End mainmenu area -->
-    
+
     <div class="product-big-title-area">
         <div class="container">
             <div class="row">
@@ -140,8 +140,8 @@
             </div>
         </div>
     </div> <!-- End Page title area -->
-    
-    
+
+
     <div class="single-product-area">
         <div class="zigzag-bottom"></div>
         <div class="container">
@@ -154,13 +154,13 @@
                             <input type="submit" value="procurar">
                         </form>
                     </div>
-                    
+
                     <div class="single-sidebar">
                         <h2 class="sidebar-title">Produtos</h2>
-                        
+
                        <?php
                                if(mysqli_num_rows($resultado3)>0){
-                                while($data3=mysqli_fetch_array($resultado3,MYSQLI_ASSOC)){ 
+                                while($data3=mysqli_fetch_array($resultado3,MYSQLI_ASSOC)){
                                     echo"
                                      
                         <div class='thubmnail-recent'>
@@ -176,16 +176,16 @@
                         }
                     }
                     ?>
-                       
+
                     </div>
-                    
-                    
+
+
                 </div>
-                
+
                 <div class="col-md-8">
                     <div class="product-content-right">
                         <div class="woocommerce">
-                        
+
                             <form class="container-fluid" method='POST' action='?acao=up'>
                                 <table cellspacing="0" class="shop_table cart">
                                     <thead>
@@ -199,15 +199,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    
+
                                <?php
-                     
+
                                 if(count($_SESSION['carrinho']) == 0){
                                     echo "<tr><th scope='row'>Nenhum produto selecionado</th>";
                                 }else{
-                                 
+
                                     foreach($_SESSION['carrinho'] as $id => $qtd){
-                                    
+
                                     $resultado=mysqli_query($cnx,"select *from produtos where id = $id") or die (mysqli_error());
                                     $data = mysqli_fetch_assoc($resultado);
                                     $produto = $data['nome'];
@@ -237,11 +237,20 @@
 
                                             <td class='product-quantity'>
                                                 <div class='quantity buttons_added'>
-                                                    <input type='button' class='minus' value='-'>
+                                                  
                                                     <input type='number' size='4' class='input-text qty text' title='Qty'  name='prod[".$id."]' value='".$qtd."' min='0' step='1'>
-                                                    <input type='button' class='plus' value='+'>
+                                                    
                                                 </div>
-                                            </td>
+                                              ";
+                                    $qtdValida =$data['qtd'] < $qtd;
+                                    if ($qtdValida) {
+                                        echo "Qatidade dispoivel | so teos ".$data['qtd']."";
+                                    }
+
+
+
+
+                                         echo "  </td>
 
                                             <td class='product-subtotal'>
                                                 <span class='amount'>".$total."kz</span> 
@@ -250,19 +259,23 @@
                                         <tr>
                                         
                                         ";
-                                       
+
                                         }
                                        }
                                        ?>
                                             <td class="actions" colspan="6">
                                                 <div class="coupon">
                                                     <label for="coupon_code" style="font-size: 20px;">Total: <?php echo number_format($total_final,2,',','.');  ?> kz</label>
-                                                
+
                                                 </div>
                                                 <br>
                                                 <input type="submit" value="Actualizar Carrinho" name="update_cart" class="button">
-                                               
-                                              <a href="checkout.php"> <input type="button" value="Fazer o check-out" name="proceed" class="checkout-button button alt wc-forward"></a>
+
+                                              <a href="checkout.php">
+                                                  <input type="button" value="Fazer o check-out" name="proceed" class="checkout-button button alt wc-forward">
+                                              </a>
+
+
                                             </td>
                                         </tr>
                                     </tbody>
@@ -275,10 +288,10 @@
                             <div class="cross-sells">
                                 <h2>Você pode estar interessado</h2>
                                 <ul class="products">
-                          
+
                             <?php
                                if(mysqli_num_rows($resultado5)>0){
-                                while($data5=mysqli_fetch_array($resultado5,MYSQLI_ASSOC)){ 
+                                while($data5=mysqli_fetch_array($resultado5,MYSQLI_ASSOC)){
                                     echo" 
                                      
                                     <li class='product'>
@@ -293,7 +306,7 @@
                                         <a class='add_to_cart_button' data-quantity='1' data-product_sku='' data-product_id='22' rel='nofollow' href='single-product.php?id=".$data5['idp']."'>Select options</a>
                                     </li>
             ";
-            }   
+            }
         }
 ?>
                                 </ul>
@@ -591,15 +604,15 @@
 
 
                             </div>
-                        </div>                        
-                    </div>                    
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
 
-    
+
     <div class="footer-top-area">
         <div class="zigzag-bottom"></div>
         <div class="container">
@@ -617,7 +630,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-md-3 col-sm-6">
                     <div class="footer-menu">
                     <h2 class="footer-wid-title">Navegação do usuário </h2>
@@ -627,11 +640,11 @@
                             <li><a href="#">Lista de desejos</a></li>
                             <li><a href="#">Contato do fornecedor</a></li>
                             <li><a href="#">Página inicial</a></li>
-                        </ul> 
-                 
+                        </ul>
+
                     </div>
                 </div>
-                
+
                 <div class="col-md-3 col-sm-6">
                     <div class="footer-menu">
                     <h2 class="footer-wid-title">Categorias</h2>
@@ -641,10 +654,10 @@
                             <li><a href="#">TV LED</a></li>
                             <li><a href="#">Computador</a></li>
                             <li><a href="#">Gadetes</a></li>
-                        </ul>                      
+                        </ul>
                     </div>
                 </div>
-                
+
                 <div class="col-md-3 col-sm-6">
                     <div class="footer-newsletter">
                         <h2 class="footer-wid-title">Boletim informativo</h2>
@@ -659,7 +672,7 @@
             </div>
         </div>
     </div> <!-- End footer top area -->
-    
+
     <div class="footer-bottom-area">
         <div class="container">
             <div class="row">
@@ -668,7 +681,7 @@
                         <p>&copy; 2015 eElectronics. All Rights Reserved. Coded with <i class=" heart"></i> by <a href="http://wpexpand.com" target="_blank">WP Expand</a></p>
                     </div>
                 </div>
-                
+
                 <div class="col-md-4">
                     <div class="footer-card-icon">
                         <i class=" cc-discover"></i>
@@ -683,17 +696,17 @@
 
     <!-- Latest jQuery form server -->
     <script src="js/jquery.js"></script>
-    
+
     <!-- Bootstrap JS form CDN -->
     <script src="js/bootstrap.min.js"></script>
-    
+
     <!-- jQuery sticky menu -->
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/jquery.sticky.js"></script>
-    
+
     <!-- jQuery easing -->
     <script src="js/jquery.easing.1.3.min.js"></script>
-    
+
     <!-- Main Script -->
     <script src="js/main.js"></script>
   </body>
